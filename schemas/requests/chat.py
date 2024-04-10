@@ -31,3 +31,13 @@ class Message(pydantic.BaseModel):
 
 class Chat(_Request):
     messages: typing.List[Message]
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "messages": Message.model_config['json_schema_extra']['examples'],
+                }
+            ]
+        }
+    }
