@@ -32,7 +32,7 @@ async def inference(request: schemas.requests.Inference) -> schemas.Response:
         response=(
             ollama.generate(
                 model=request.model,
-                system=request.sytem,
+                system=request.system,
                 prompt=request.prompt
             )
             ['message']
@@ -50,7 +50,6 @@ async def chat(request: schemas.requests.Chat) -> schemas.Response:
         response=(
             ollama.chat(
                 model=request.model,
-                system=request.system,
                 chat=request.chat
             )
             ['message']['content']
