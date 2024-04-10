@@ -1,0 +1,9 @@
+{
+  "id": "falcon:40b-instruct-q5_1",
+  "name": "Falcon",
+  "type": "instruct",
+  "params": "40b",
+  "author": "TII",
+  "origin": "UAE",
+  "more_link": "https://falconllm.tii.ae/falcon-40b.html"
+}
