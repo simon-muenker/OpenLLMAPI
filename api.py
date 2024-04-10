@@ -35,8 +35,7 @@ async def inference(request: schemas.requests.Inference) -> schemas.Response:
                 system=request.system,
                 prompt=request.prompt
             )
-            ['message']
-            ['content']
+            ['response']
         ),
         log_path=CFG.response_log_path
     )
