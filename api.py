@@ -49,7 +49,7 @@ async def chat(request: schemas.requests.Chat) -> schemas.Response:
         response=(
             ollama.chat(
                 model=request.model,
-                messages=request.messages
+                messages=[dict(message) for message in request.messages]
             )
             ['message']['content']
         ),
