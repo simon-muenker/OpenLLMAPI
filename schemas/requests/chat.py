@@ -36,6 +36,7 @@ class Chat(_Request):
         "json_schema_extra": {
             "examples": [
                 {
+                    **_Request.model_config['json_schema_extra']['examples'][0],
                     "messages": Message.model_config['json_schema_extra']['examples'],
                 }
             ]
