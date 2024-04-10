@@ -1,8 +1,11 @@
 import datetime
 import json
+import typing
 import uuid
 
 import pydantic
+
+from .requests.chat import Message
 
 
 class Response(pydantic.BaseModel):
@@ -10,7 +13,7 @@ class Response(pydantic.BaseModel):
     timestamp: datetime.datetime = None
 
     model: str
-    prompt: str
+    prompt: str | typing.List[Message]
     response: str
 
     def __init__(self, log_path: str = None, **data):

@@ -45,11 +45,11 @@ async def inference(request: schemas.requests.Inference) -> schemas.Response:
 async def chat(request: schemas.requests.Chat) -> schemas.Response:
     return schemas.Response(
         model=request.model,
-        chat=request.chat,
+        prompt=request.messages,
         response=(
             ollama.chat(
                 model=request.model,
-                chat=request.chat
+                messages=request.messages
             )
             ['message']['content']
         ),

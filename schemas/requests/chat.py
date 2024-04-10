@@ -11,4 +11,4 @@ class Message(pydantic.BaseModel):
 
 
 class Chat(_Request):
-    chat: typing.List[Message]
+    messages: typing.List[Message]
