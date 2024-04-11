@@ -78,20 +78,36 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
             )
         ],
         response=(
-            ollama.generate(
+            ollama.embeddings(
                 model=request.model,
                 prompt=request.prompt
             )
             ['embedding']
         ),
-        log_path=CFG.response_log_path
+        log_path=CFG.embedding_log_path
     )
+
+
+@app.get("/embed/")
+async def get_embed() -> typing.List[dict]:
+    return [
+        json.load(open(path)) for path in
+        glob.glob(f'{CFG.embedding_log_path}/*.json')
+    ]
 
 
 @app.post("/feedback/")
 async def feedback(request: schemas.requests.Feedback):
     request.log(CFG.feedback_log_path)
     return True
+
+
+@app.get("/feedback/")
+async def get_feedback() -> typing.List[dict]:
+    return [
+        json.load(open(path)) for path in
+        glob.glob(f'{CFG.feedback_log_path}/*.json')
+    ]
 
 
 @app.get("/models/")
@@ -109,12 +125,4 @@ async def get_responses() -> typing.List[dict]:
     return [
         json.load(open(path)) for path in
         glob.glob(f'{CFG.response_log_path}/*.json')
-    ]
-
-
-@app.get("/feedback/")
-async def get_feedback() -> typing.List[dict]:
-    return [
-        json.load(open(path)) for path in
-        glob.glob(f'{CFG.feedback_log_path}/*.json')
     ]
