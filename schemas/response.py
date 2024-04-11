@@ -5,7 +5,7 @@ import uuid
 
 import pydantic
 
-import requests
+from . import requests
 
 
 class Response(pydantic.BaseModel):
