@@ -34,12 +34,12 @@ class Config:
         pathlib.Path(self.feedback_log_path).mkdir(parents=True, exist_ok=True)
         pathlib.Path(self.rank_log_path).mkdir(parents=True, exist_ok=True)
 
-        self.models: typing.List[schemas.Model] = util.load_from_path(
+        self.models: typing.List[schemas.Model] = util.pydantic_from_glob(
             f'{self.data_path}/models/*.json',
-            schemas.Model.load
+            schemas.Model
         )
 
-        self.personas: typing.List[schemas.Persona] = util.load_from_path(
+        self.personas: typing.List[schemas.Persona] = util.pydantic_from_glob(
             f'{self.data_path}/personas/*.json',
-            schemas.Persona.load
+            schemas.Persona
         )

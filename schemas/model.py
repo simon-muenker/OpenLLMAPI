@@ -1,5 +1,4 @@
 import typing
-import json
 
 import pydantic
 
@@ -12,7 +11,3 @@ class Model(pydantic.BaseModel):
     author: str
     origin: str
     more_link: str
-
-    @classmethod
-    def load(cls, path: str) -> 'Model':
-        return cls(**json.load(open(path)))

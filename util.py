@@ -2,9 +2,19 @@ import glob
 import json
 import typing
 
+import pydantic
 
-def load_from_path(
+
+def pydantic_from_glob(
         path_pattern: str,
-        loader: typing.Callable = lambda x: json.load(open(x))
+        cls: typing.Callable
 ) -> typing.List[typing.Any]:
-    return [loader(path) for path in glob.glob(path_pattern)]
+    return [cls(**json.load(open(path))) for path in glob.glob(path_pattern)]
+
+
+def pydantic_to_json(path: str, model: pydantic.BaseModel) -> None:
+    json.dump(
+        model.model_dump(mode='json'),
+        open(f'{path}.json', "w"),
+        indent=4
+    )
