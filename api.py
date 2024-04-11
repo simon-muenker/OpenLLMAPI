@@ -25,8 +25,8 @@ app.add_middleware(
 )
 
 
-@app.post("/")
-async def inference(request: schemas.requests.Inference) -> schemas.Response:
+@app.post("/", tags=['inference'])
+async def prompt(request: schemas.requests.Inference) -> schemas.Response:
     return schemas.Response(
         model=request.model,
         prompt=[
@@ -51,7 +51,7 @@ async def inference(request: schemas.requests.Inference) -> schemas.Response:
     )
 
 
-@app.post("/chat/")
+@app.post("/chat/", tags=['inference'])
 async def chat(request: schemas.requests.Chat) -> schemas.Response:
     return schemas.Response(
         model=request.model,
@@ -67,7 +67,7 @@ async def chat(request: schemas.requests.Chat) -> schemas.Response:
     )
 
 
-@app.post("/embed/")
+@app.post("/embed/", tags=['inference'])
 async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
     return schemas.Response(
         model=request.model,
@@ -88,7 +88,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
     )
 
 
-@app.get("/embed/")
+@app.get("/embed/", tags=['data'])
 async def get_embed() -> typing.List[dict]:
     return [
         json.load(open(path)) for path in
@@ -96,13 +96,13 @@ async def get_embed() -> typing.List[dict]:
     ]
 
 
-@app.post("/feedback/")
+@app.post("/feedback/", tags=['annotate'])
 async def feedback(request: schemas.requests.Feedback):
     request.log(CFG.feedback_log_path)
     return True
 
 
-@app.get("/feedback/")
+@app.get("/feedback/", tags=['data'])
 async def get_feedback() -> typing.List[dict]:
     return [
         json.load(open(path)) for path in
@@ -110,17 +110,17 @@ async def get_feedback() -> typing.List[dict]:
     ]
 
 
-@app.get("/models/")
+@app.get("/models/", tags=['data'])
 async def get_models() -> typing.List[schemas.Model]:
     return CFG.models
 
 
-@app.get("/personas/")
+@app.get("/personas/", tags=['data'])
 async def get_personas() -> typing.List[schemas.Persona]:
     return CFG.personas
 
 
-@app.get("/responses/")
+@app.get("/responses/", tags=['data'])
 async def get_responses() -> typing.List[dict]:
     return [
         json.load(open(path)) for path in
