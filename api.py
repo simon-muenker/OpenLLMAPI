@@ -93,7 +93,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
 @app.get("/embed/", tags=['data'])
 async def get_embeddings() -> typing.List[schemas.Response]:
     return util.pydantic_from_glob(
-        f'{CFG.data_path}/embeddings/*.json',
+        f'{CFG.embedding_log_path}/*.json',
         schemas.Response
     )
 
