@@ -1,8 +1,8 @@
-import glob
 import pathlib
 import typing
 
 import schemas
+import util
 
 
 class Config:
@@ -27,17 +27,19 @@ class Config:
         self.response_log_path = f'{self.log_path}/response'
         self.embedding_log_path = f'{self.log_path}/embedding'
         self.feedback_log_path = f'{self.log_path}/feedback'
+        self.rank_log_path = f'{self.log_path}/rank'
 
         pathlib.Path(self.response_log_path).mkdir(parents=True, exist_ok=True)
         pathlib.Path(self.embedding_log_path).mkdir(parents=True, exist_ok=True)
         pathlib.Path(self.feedback_log_path).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(self.rank_log_path).mkdir(parents=True, exist_ok=True)
 
-        self.models: typing.List[schemas.Model] = [
-            schemas.Model.load(model_path) for model_path
-            in glob.glob(f'{self.data_path}/models/*.json')
-        ]
+        self.models: typing.List[schemas.Model] = util.load_from_path(
+            f'{self.data_path}/models/*.json',
+            schemas.Model.load
+        )
 
-        self.personas: typing.List[schemas.Persona] = [
-            schemas.Persona.load(persona_path) for persona_path
-            in glob.glob(f'{self.data_path}/personas/*.json')
-        ]
+        self.personas: typing.List[schemas.Persona] = util.load_from_path(
+            f'{self.data_path}/personas/*.json',
+            schemas.Persona.load
+        )

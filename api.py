@@ -1,5 +1,3 @@
-import glob
-import json
 import typing
 
 import ollama
@@ -8,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import config
 import schemas
+import util
 
 CFG = config.Config()
 
@@ -90,10 +89,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
 
 @app.get("/embed/", tags=['data'])
 async def get_embeddings() -> typing.List[dict]:
-    return [
-        json.load(open(path)) for path in
-        glob.glob(f'{CFG.embedding_log_path}/*.json')
-    ]
+    return util.load_from_path(f'{CFG.data_path}/embeddings/*.json')
 
 
 @app.post("/feedback/", tags=['annotate'])
@@ -102,12 +98,20 @@ async def feedback(request: schemas.requests.Feedback):
     return True
 
 
-@app.get("/feedback/", tags=['data'])
+@app.get("/feedback/", tags=['data', 'annotate'])
 async def get_feedback() -> typing.List[dict]:
-    return [
-        json.load(open(path)) for path in
-        glob.glob(f'{CFG.feedback_log_path}/*.json')
-    ]
+    return util.load_from_path(f'{CFG.feedback_log_path}/*.json')
+
+
+@app.post("/rank/", tags=['annotate'])
+async def rank(request: schemas.requests.Rank):
+    request.log(CFG.rank_log_path)
+    return True
+
+
+@app.get("/rank/", tags=['data', 'annotate'])
+async def get_ranks() -> typing.List[dict]:
+    return util.load_from_path(f'{CFG.rank_log_path}/*.json')
 
 
 @app.get("/models/", tags=['data'])
@@ -122,7 +126,4 @@ async def get_personas() -> typing.List[schemas.Persona]:
 
 @app.get("/responses/", tags=['data'])
 async def get_responses() -> typing.List[dict]:
-    return [
-        json.load(open(path)) for path in
-        glob.glob(f'{CFG.response_log_path}/*.json')
-    ]
+    return util.load_from_path(f'{CFG.response_log_path}/*.json')
