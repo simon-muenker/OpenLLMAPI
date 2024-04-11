@@ -14,7 +14,7 @@ class Response(pydantic.BaseModel):
 
     model: str
     prompt: typing.List[requests.chat.Message]
-    response: str
+    response: str | typing.List[float]
 
     def __init__(self, log_path: str = None, **data):
         super().__init__(**data)
