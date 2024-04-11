@@ -1,0 +1,10 @@
+{
+  "id": "_blank",
+  "name": "_blank",
+  "icon": "🤖",
+  "type": [
+    "assistant"
+  ],
+  "description": "I am the vanilla model, without any system prompt",
+  "prompt": ""
+}
