@@ -109,16 +109,16 @@ async def get_personas() -> typing.List[schemas.Persona]:
 
 
 @app.get("/responses/")
-async def get_responses() -> typing.List[schemas.Response]:
+async def get_responses() -> typing.List[dict]:
     return [
-        schemas.Response.load(path) for path in
+        json.load(open(path)) for path in
         glob.glob(f'{CFG.response_log_path}/*.json')
     ]
 
 
 @app.get("/feedback/")
-async def get_feedback() -> typing.List[schemas.requests.Feedback]:
+async def get_feedback() -> typing.List[dict]:
     return [
-        schemas.requests.Feedback.load(path) for path in
+        json.load(open(path)) for path in
         glob.glob(f'{CFG.feedback_log_path}/*.json')
     ]

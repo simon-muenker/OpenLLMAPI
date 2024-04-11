@@ -31,7 +31,3 @@ class Response(pydantic.BaseModel):
             open(f'{path}/{self.id}.json', "w"),
             indent=4
         )
-
-    @classmethod
-    def load(cls, path: str) -> 'Response':
-        return cls(**json.load(open(path)))
