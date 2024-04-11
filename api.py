@@ -89,7 +89,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
 
 
 @app.get("/embed/", tags=['data'])
-async def get_embed() -> typing.List[dict]:
+async def get_embeddings() -> typing.List[dict]:
     return [
         json.load(open(path)) for path in
         glob.glob(f'{CFG.embedding_log_path}/*.json')
