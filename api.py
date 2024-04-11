@@ -90,11 +90,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
 
 @app.post("/feedback/")
 async def feedback(request: schemas.requests.Feedback):
-    json.dump(
-        request.model_dump(mode='json'),
-        open(f'{CFG.feedback_log_path}/{request.id}.json', "w"),
-        indent=4
-    )
+    request.log(CFG.feedback_log_path)
     return True
 
 
