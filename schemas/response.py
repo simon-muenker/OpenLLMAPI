@@ -5,7 +5,7 @@ import uuid
 
 import pydantic
 
-from .requests.chat import Message
+import requests
 
 
 class Response(pydantic.BaseModel):
@@ -13,7 +13,7 @@ class Response(pydantic.BaseModel):
     timestamp: datetime.datetime = None
 
     model: str
-    prompt: str | typing.List[Message]
+    prompt: typing.List[requests.chat.Message]
     response: str
 
     def __init__(self, log_path: str = None, **data):
@@ -31,3 +31,7 @@ class Response(pydantic.BaseModel):
             open(f'{path}/{self.id}.json', "w"),
             indent=4
         )
+
+    @classmethod
+    def load(cls, path: str) -> 'Response':
+        return cls(**json.load(open(path)))

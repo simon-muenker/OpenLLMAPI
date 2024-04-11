@@ -1,5 +1,6 @@
-import typing
+import glob
 import json
+import typing
 
 import ollama
 from fastapi import FastAPI
@@ -28,7 +29,16 @@ app.add_middleware(
 async def inference(request: schemas.requests.Inference) -> schemas.Response:
     return schemas.Response(
         model=request.model,
-        prompt=request.prompt,
+        prompt=[
+            schemas.requests.Chat.Message(
+                role='system',
+                content=request.system
+            ),
+            schemas.requests.Chat.Message(
+                role='user',
+                content=request.prompt
+            )
+        ],
         response=(
             ollama.generate(
                 model=request.model,
@@ -57,6 +67,27 @@ async def chat(request: schemas.requests.Chat) -> schemas.Response:
     )
 
 
+@app.post("/embed/")
+async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
+    return schemas.Response(
+        model=request.model,
+        prompt=[
+            schemas.requests.Chat.Message(
+                role='user',
+                content=request.prompt
+            )
+        ],
+        response=(
+            ollama.generate(
+                model=request.model,
+                prompt=request.prompt
+            )
+            ['embedding']
+        ),
+        log_path=CFG.response_log_path
+    )
+
+
 @app.post("/feedback/")
 async def feedback(request: schemas.requests.Feedback):
     json.dump(
@@ -75,3 +106,19 @@ async def get_models() -> typing.List[schemas.Model]:
 @app.get("/personas/")
 async def get_personas() -> typing.List[schemas.Persona]:
     return CFG.personas
+
+
+@app.get("/responses/")
+async def get_responses() -> typing.List[schemas.Response]:
+    return [
+        schemas.Response.load(path) for path in
+        glob.glob(f'{CFG.response_log_path}/*.json')
+    ]
+
+
+@app.get("/feedback/")
+async def get_feedback() -> typing.List[schemas.requests.Feedback]:
+    return [
+        schemas.requests.Feedback.load(path) for path in
+        glob.glob(f'{CFG.feedback_log_path}/*.json')
+    ]

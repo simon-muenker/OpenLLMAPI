@@ -13,6 +13,7 @@ class Config:
         'http://localhost:5173',
         'http://localhost:8000',
         'https://demo.twon.uni-trier.de',
+        'https://chat.cl.uni-trier.de',
         'https://bishop.xciv.de',
         'https://chat.sci.xciv.de'
     ]
