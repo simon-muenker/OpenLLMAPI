@@ -30,11 +30,11 @@ async def inference(request: schemas.requests.Inference) -> schemas.Response:
     return schemas.Response(
         model=request.model,
         prompt=[
-            schemas.requests.Chat.Message(
+            schemas.requests.chat.Message(
                 role='system',
                 content=request.system
             ),
-            schemas.requests.Chat.Message(
+            schemas.requests.chat.Message(
                 role='user',
                 content=request.prompt
             )
