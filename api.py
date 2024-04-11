@@ -99,19 +99,25 @@ async def feedback(request: schemas.requests.Feedback):
 
 
 @app.get("/feedback/", tags=['annotate'])
-async def get_feedback() -> typing.List[dict]:
-    return util.load_from_path(f'{CFG.feedback_log_path}/*.json')
+async def get_feedback() -> typing.List[schemas.requests.Feedback]:
+    return util.load_from_path(
+        f'{CFG.feedback_log_path}/*.json',
+        schemas.requests.Feedback.load
+    )
 
 
 @app.post("/rank/", tags=['annotate'])
-async def rank(request: schemas.requests.Rank):
+async def rank(request: schemas.requests.Rank) -> bool:
     request.log(CFG.rank_log_path)
     return True
 
 
 @app.get("/rank/", tags=['annotate'])
-async def get_ranks() -> typing.List[dict]:
-    return util.load_from_path(f'{CFG.rank_log_path}/*.json')
+async def get_ranks() -> typing.List[schemas.requests.Rank]:
+    return util.load_from_path(
+        f'{CFG.rank_log_path}/*.json',
+        schemas.requests.Rank.load
+    )
 
 
 @app.get("/models/", tags=['data'])

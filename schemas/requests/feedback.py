@@ -15,7 +15,8 @@ class Feedback(pydantic.BaseModel):
     def __init__(self, **data):
         super().__init__(**data)
 
-        self.timestamp = datetime.datetime.now()
+        if self.timestamp is None:
+            self.timestamp = datetime.datetime.now()
 
     def log(self, path: str) -> None:
         json.dump(
@@ -23,3 +24,7 @@ class Feedback(pydantic.BaseModel):
             open(f'{path}/{self.id}.{self.timestamp}.json', "w"),
             indent=4
         )
+
+    @classmethod
+    def load(cls, path: str) -> 'Feedback':
+        return cls(**json.load(open(path)))
