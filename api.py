@@ -72,7 +72,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
     return schemas.Response(
         model=request.model,
         prompt=[
-            schemas.requests.Chat.Message(
+            schemas.requests.chat.Message(
                 role='user',
                 content=request.prompt
             )
