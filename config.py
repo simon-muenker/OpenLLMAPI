@@ -9,14 +9,7 @@ class Config:
     title: str = 'OpenLLMAPI - University Trier CL'
     version: str = '0.2.0'
 
-    trust_origins: typing.List[str] = [
-        'http://localhost:5173',
-        'http://localhost:8000',
-        'https://demo.twon.uni-trier.de',
-        'https://chat.cl.uni-trier.de',
-        'https://bishop.xciv.de',
-        'https://chat.sci.xciv.de'
-    ]
+    trust_origins: typing.List[str] = ['*']
 
     data_path: str = './data'
     log_path: str = './logs'
