@@ -98,7 +98,7 @@ async def feedback(request: schemas.requests.Feedback):
     return True
 
 
-@app.get("/feedback/", tags=['data', 'annotate'])
+@app.get("/feedback/", tags=['annotate'])
 async def get_feedback() -> typing.List[dict]:
     return util.load_from_path(f'{CFG.feedback_log_path}/*.json')
 
@@ -109,7 +109,7 @@ async def rank(request: schemas.requests.Rank):
     return True
 
 
-@app.get("/rank/", tags=['data', 'annotate'])
+@app.get("/rank/", tags=['annotate'])
 async def get_ranks() -> typing.List[dict]:
     return util.load_from_path(f'{CFG.rank_log_path}/*.json')
 
