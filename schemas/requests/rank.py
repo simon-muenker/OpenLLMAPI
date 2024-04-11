@@ -20,7 +20,7 @@ class Rank(pydantic.BaseModel):
     def log(self, path: str) -> None:
         json.dump(
             self.model_dump(mode='json'),
-            open(f'{path}/{self.id}.{self.timestamp}.json', "w"),
+            open(f'{path}/{self.winner}.{self.timestamp}.json', "w"),
             indent=4
         )
 
