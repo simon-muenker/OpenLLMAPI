@@ -146,7 +146,7 @@ async def get_responses() -> typing.List[schemas.Response]:
 
 
 @app.get("/responses/{idx}", tags=['data'])
-async def update_item(idx: uuid.UUID) -> schemas.Response:
+async def get_response_by_id(idx: uuid.UUID) -> schemas.Response:
     item: typing.List[schemas.Response] = util.pydantic_from_glob(
         f'{CFG.response_log_path}/{idx}.json', schemas.Response
     )
