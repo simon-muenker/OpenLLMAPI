@@ -145,5 +145,5 @@ async def get_responses() -> typing.List[schemas.Response]:
 
 
 @app.get("/responses/{idx}", tags=['data'])
-async def update_item(idx: str):
+async def update_item(idx: str) -> schemas.Response:
     return util.pydantic_from_glob(f'{CFG.response_log_path}/{idx}', schemas.Response)[0]
