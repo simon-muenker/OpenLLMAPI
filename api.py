@@ -1,7 +1,8 @@
 import typing
+import uuid
 
 import ollama
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
 import config
@@ -145,5 +146,12 @@ async def get_responses() -> typing.List[schemas.Response]:
 
 
 @app.get("/responses/{idx}", tags=['data'])
-async def update_item(idx: str) -> schemas.Response:
-    return util.pydantic_from_glob(f'{CFG.response_log_path}/{idx}', schemas.Response)[0]
+async def update_item(idx: uuid.UUID) -> schemas.Response:
+    item: typing.List[schemas.Response] = util.pydantic_from_glob(
+        f'{CFG.response_log_path}/{idx}', schemas.Response
+    )
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Response not found")
+
+    return item[0]
