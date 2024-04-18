@@ -6,5 +6,5 @@
     "assistant"
   ],
   "description": "I am the vanilla model, without any system prompt",
-  "prompt": "_blank"
+  "prompt": "No system prompt."
 }
