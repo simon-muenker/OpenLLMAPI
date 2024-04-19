@@ -1,0 +1,9 @@
+{
+  "id": "llama3:70b-instruct-q6_K",
+  "name": "Llama3",
+  "type": "instruct",
+  "params": "70b",
+  "author": "Meta AI",
+  "origin": "US",
+  "more_link": "https://llama.meta.com/"
+}
