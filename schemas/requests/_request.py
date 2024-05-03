@@ -11,6 +11,7 @@ class _Request(pydantic.BaseModel):
         'llama3:70b-instruct-q6_K',
         'mistral:7b-instruct-v0.2-q6_K',
         'mixtral:8x7b-instruct-v0.1-q6_K',
+        'mixtral:8x22b-instruct-v0.1-q6_K',
         'qwen:72b-chat-v1.5-q6_K',
     ] = 'mixtral:8x7b-instruct-v0.1-q6_K'
 
