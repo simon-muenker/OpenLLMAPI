@@ -1,5 +1,7 @@
+import pydantic
 
-class Embedding:
+
+class Embedding(pydantic.BaseModel):
     prompt: str
 
     model_config = {
