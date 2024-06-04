@@ -72,7 +72,7 @@ async def chat(request: schemas.requests.Chat) -> schemas.Response:
 @app.post("/embed/", tags=['inference'])
 async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
     response: schemas.Response = schemas.Response(
-        model=request.model,
+        model="mxbai-embed-large",
         prompt=[
             schemas.requests.chat.Message(
                 role='user',
@@ -81,7 +81,7 @@ async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
         ],
         response=(
             ollama.embeddings(
-                model=request.model,
+                model="mxbai-embed-large",
                 prompt=request.prompt
             )
             ['embedding']
