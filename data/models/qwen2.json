@@ -1,7 +1,7 @@
 {
   "id": "qwen2:72b-instruct-q6_K",
   "name": "Qwen2",
-  "type": "isntruct",
+  "type": "instruct",
   "params": "72b",
   "author": "Alibaba",
   "origin": "PRC",
