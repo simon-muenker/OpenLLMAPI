@@ -1,0 +1,9 @@
+{
+  "id": "qwen2:72b-instruct-q6_K",
+  "name": "Qwen2",
+  "type": "isntruct",
+  "params": "72b",
+  "author": "Alibaba",
+  "origin": "PRC",
+  "more_link": "https://github.com/QwenLM/Qwen2"
+}

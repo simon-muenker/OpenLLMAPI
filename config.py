@@ -7,7 +7,7 @@ import util
 
 class Config:
     title: str = 'OpenLLMAPI - University Trier CL'
-    version: str = '0.2.0'
+    version: str = '0.3.0'
 
     trust_origins: typing.List[str] = ['*']
 

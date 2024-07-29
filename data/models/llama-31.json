@@ -1,7 +1,7 @@
 {
-  "id": "llama2:70b-chat-q6_K",
-  "name": "Llama2",
-  "type": "chat",
+  "id": "llama3.1:70b-instruct-q6_K",
+  "name": "Llama3.1",
+  "type": "instruct",
   "params": "70b",
   "author": "Meta AI",
   "origin": "US",

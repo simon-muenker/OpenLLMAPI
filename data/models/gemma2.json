@@ -1,0 +1,9 @@
+{
+  "id": "gemma2:27b-instruct-q6_K",
+  "name": "Gemma2",
+  "type": "instruct",
+  "params": "27b",
+  "author": "Google",
+  "origin": "US",
+  "more_link": "https://blog.google/technology/developers/google-gemma-2/"
+}
