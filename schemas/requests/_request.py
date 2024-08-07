@@ -7,7 +7,7 @@ class _Request(pydantic.BaseModel):
     model: typing.Literal[
         'gemma:7b-instruct-q6_K',
         "gemma2:27b-instruct-q6_K",
-        'llama3:70b-instruct-q6_K',
+        "llama3.1:8b-instruct-q6_K",
         "llama3.1:70b-instruct-q6_K",
         'mistral:7b-instruct-v0.3-q6_K',
         "mistral-large:123b-instruct-2407-q6_K",
