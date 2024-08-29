@@ -1,9 +1,0 @@
-{
-  "id": "mistral-large:123b-instruct-2407-q6_K",
-  "name": "Mistral",
-  "type": "instruct",
-  "params": "123b",
-  "author": "Mistral AI",
-  "origin": "EU",
-  "more_link": "https://mistral.ai/news/mistral-large-2407/"
-}
