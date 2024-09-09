@@ -1,5 +1,6 @@
 import typing
 import uuid
+import logging
 
 import ollama
 from fastapi import FastAPI, HTTPException
@@ -39,14 +40,7 @@ async def prompt(request: schemas.requests.Inference) -> schemas.Response:
                 content=request.prompt
             )
         ],
-        response=(
-            ollama.generate(
-                model=request.model,
-                system=request.system,
-                prompt=request.prompt
-            )
-            ['response']
-        )
+        response=ollama.generate(**request.model_dump())['response']
     )
     util.pydantic_to_json(f'{CFG.response_log_path}/{response.id}', response)
     return response
@@ -54,16 +48,11 @@ async def prompt(request: schemas.requests.Inference) -> schemas.Response:
 
 @app.post("/chat/", tags=['inference'])
 async def chat(request: schemas.requests.Chat) -> schemas.Response:
+    logging.warn(request.model_dump())
     response: schemas.Response = schemas.Response(
         model=request.model,
         prompt=request.messages,
-        response=(
-            ollama.chat(
-                model=request.model,
-                messages=[dict(message) for message in request.messages]
-            )
-            ['message']['content']
-        )
+        response=ollama.chat(**request.model_dump())['message']['content']
     )
     util.pydantic_to_json(f'{CFG.response_log_path}/{response.id}', response)
     return response

@@ -19,11 +19,14 @@ class _Request(pydantic.BaseModel):
         "phi3:14b-medium-128k-instruct-q6_K",
     ] = "llama3.1:8b-instruct-q6_K"
 
+    options: typing.Dict = pydantic.Field(default_factory=dict)
+
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
                     "model": "llama3.1:8b-instruct-q6_K",
+                    "options": {}
                 }
             ]
         }
