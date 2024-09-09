@@ -19,10 +19,6 @@ class Message(pydantic.BaseModel):
                 {
                     "role": "user",
                     "content": "What is the meaning of life?",
-                },
-                {
-                    "role": "assistant",
-                    "content": "42",
                 }
             ]
         }
