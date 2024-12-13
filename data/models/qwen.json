@@ -1,9 +1,0 @@
-{
-  "id": "qwen:72b-chat-v1.5-q6_K",
-  "name": "Qwen",
-  "type": "instruct",
-  "params": "72b",
-  "author": "Alibaba",
-  "origin": "PRC",
-  "more_link": "https://github.com/QwenLM/Qwen"
-}
