@@ -1,0 +1,9 @@
+{
+  "id": "qwen2.5:70b",
+  "name": "Qwen2.5",
+  "type": "instruct",
+  "params": "70b",
+  "author": "Alibaba",
+  "origin": "China",
+  "more_link": "https://arxiv.org/abs/2412.15115"
+}

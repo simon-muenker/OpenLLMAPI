@@ -7,7 +7,7 @@ import util
 
 class Config:
     title: str = 'OpenLLMAPI - University Trier CL'
-    version: str = '0.3.0'
+    version: str = '0.3.1'
 
     trust_origins: typing.List[str] = ['*']
 
@@ -17,15 +17,13 @@ class Config:
     def __init__(self) -> None:
         self.log_path = f'{self.log_path}/{self.version}'
 
-        self.response_log_path = f'{self.log_path}/response'
-        self.embedding_log_path = f'{self.log_path}/embedding'
         self.feedback_log_path = f'{self.log_path}/feedback'
         self.rank_log_path = f'{self.log_path}/rank'
 
-        pathlib.Path(self.response_log_path).mkdir(parents=True, exist_ok=True)
-        pathlib.Path(self.embedding_log_path).mkdir(parents=True, exist_ok=True)
         pathlib.Path(self.feedback_log_path).mkdir(parents=True, exist_ok=True)
         pathlib.Path(self.rank_log_path).mkdir(parents=True, exist_ok=True)
+
+        self.ip_blacklist: typing.List[str] = open(f"{self.data_path}/ip_blacklist.txt").read().splitlines()
 
         self.models: typing.List[schemas.Model] = util.pydantic_from_glob(
             f'{self.data_path}/models/*.json',
@@ -36,3 +34,7 @@ class Config:
             f'{self.data_path}/personas/*.json',
             schemas.Persona
         )
+
+    @property
+    def allowed_websites(self) -> typing.List[str]:
+        return open(f"{self.data_path}/allowed_websites.txt").read().splitlines()

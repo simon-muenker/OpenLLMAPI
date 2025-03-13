@@ -1,9 +1,0 @@
-{
-  "id": "phi3:14b-medium-128k-instruct-q6_K",
-  "name": "Phi-3",
-  "type": "instruct",
-  "params": "14b",
-  "author": "Microsoft",
-  "origin": "US",
-  "more_link": "https://arxiv.org/abs/2404.14219"
-}

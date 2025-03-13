@@ -1,0 +1,26 @@
+#!/bin/bash
+
+NAME=openllmapi
+DIR=/home/ubuntu/apis/OpenLLMAPI
+USER=ubuntu
+GROUP=ubuntu
+WORKERS=4
+WORKER_CLASS=uvicorn.workers.UvicornWorker
+TIMEOUT=1200
+VENV=.venv/bin/activate
+BIND=unix:$DIR/run/gunicorn.sock
+LOG_LEVEL=error
+
+cd $DIR
+source $VENV
+
+exec gunicorn api:app \
+  --name $NAME \
+  --workers $WORKERS \
+  --worker-class $WORKER_CLASS \
+  --timeout $TIMEOUT \
+  --user=$USER \
+  --group=$GROUP \
+  --bind=$BIND \
+  --log-level=$LOG_LEVEL \
+  --log-file=-

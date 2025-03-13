@@ -1,5 +1,5 @@
 {
-  "id": "llama3.3:70b-instruct-q6_K",
+  "id": "llama3.3:70b",
   "name": "Llama3.3",
   "type": "instruct",
   "params": "70b",

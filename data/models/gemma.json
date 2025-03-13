@@ -1,9 +1,0 @@
-{
-  "id": "gemma:7b-instruct-q6_K",
-  "name": "Gemma",
-  "type": "instruct",
-  "params": "7b",
-  "author": "Google",
-  "origin": "US",
-  "more_link": "https://blog.google/technology/developers/gemma-open-models/"
-}

@@ -1,5 +1,5 @@
 {
-  "id": "mistral:7b-instruct-v0.2-q6_K",
+  "id": "mistral:7b",
   "name": "Mistral",
   "type": "instruct",
   "params": "7b",

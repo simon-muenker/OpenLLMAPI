@@ -1,5 +1,5 @@
 {
-  "id": "mixtral:8x7b-instruct-v0.1-q6_K",
+  "id": "mixtral:8x7b",
   "name": "Mixtral",
   "type": "instruct",
   "params": "8x7b",

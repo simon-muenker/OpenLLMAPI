@@ -1,0 +1,9 @@
+{
+  "id": "deepseek-r1:7b",
+  "name": "DeepSeek-R1",
+  "type": "instruct",
+  "params": "7b",
+  "author": "DeepSeek",
+  "origin": "China",
+  "more_link": "https://www.deepseek.com"
+}

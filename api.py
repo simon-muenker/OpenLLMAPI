@@ -3,12 +3,13 @@ import uuid
 import logging
 
 import ollama
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from starlette.middleware.cors import CORSMiddleware
 
 import config
 import schemas
 import util
+
 
 CFG = config.Config()
 
@@ -26,8 +27,22 @@ app.add_middleware(
 )
 
 
+def check_permission(request: Request) -> None:
+    try:
+        if request.headers['origin'] in CFG.allowed_websites:
+            return
+    
+    except KeyError:
+        if request.headers["x-forwarded-for"] in CFG.ip_blacklist:
+                logging.warning(f"Permission denied for IP: {request.headers['x-forwarded-for']}")
+                raise HTTPException(status_code=403, detail="Permission denied. You are blacklisted. Contact the administrator.")
+    
+
+
 @app.post("/", tags=['inference'])
-async def prompt(request: schemas.requests.Inference) -> schemas.Response:
+async def prompt(request: schemas.requests.Inference, meta: Request) -> schemas.Response:
+    check_permission(meta)
+
     response: schemas.Response = schemas.Response(
         model=request.model,
         prompt=[
@@ -42,50 +57,19 @@ async def prompt(request: schemas.requests.Inference) -> schemas.Response:
         ],
         response=ollama.generate(**request.model_dump())['response']
     )
-    util.pydantic_to_json(f'{CFG.response_log_path}/{response.id}', response)
     return response
 
 
 @app.post("/chat/", tags=['inference'])
-async def chat(request: schemas.requests.Chat) -> schemas.Response:
-    logging.warn(request.model_dump())
+async def chat(request: schemas.requests.Chat, meta: Request) -> schemas.Response:
+    check_permission(meta)
+
     response: schemas.Response = schemas.Response(
         model=request.model,
         prompt=request.messages,
         response=ollama.chat(**request.model_dump())['message']['content']
     )
-    util.pydantic_to_json(f'{CFG.response_log_path}/{response.id}', response)
     return response
-
-
-@app.post("/embed/", tags=['inference'])
-async def embedding(request: schemas.requests.Embedding) -> schemas.Response:
-    response: schemas.Response = schemas.Response(
-        model="mxbai-embed-large",
-        prompt=[
-            schemas.requests.chat.Message(
-                role='user',
-                content=request.prompt
-            )
-        ],
-        response=(
-            ollama.embeddings(
-                model="mxbai-embed-large",
-                prompt=request.prompt
-            )
-            ['embedding']
-        )
-    )
-    util.pydantic_to_json(f'{CFG.embedding_log_path}/{response.id}', response)
-    return response
-
-
-@app.get("/embed/", tags=['data'])
-async def get_embeddings() -> typing.List[schemas.Response]:
-    return util.pydantic_from_glob(
-        f'{CFG.embedding_log_path}/*.json',
-        schemas.Response
-    )
 
 
 @app.post("/feedback/", tags=['annotate'])
@@ -124,23 +108,3 @@ async def get_models() -> typing.List[schemas.Model]:
 @app.get("/personas/", tags=['data'])
 async def get_personas() -> typing.List[schemas.Persona]:
     return CFG.personas
-
-
-@app.get("/responses/", tags=['data'])
-async def get_responses() -> typing.List[schemas.Response]:
-    return util.pydantic_from_glob(
-        f'{CFG.response_log_path}/*.json',
-        schemas.Response
-    )
-
-
-@app.get("/responses/{idx}", tags=['data'])
-async def get_response_by_id(idx: uuid.UUID) -> schemas.Response:
-    item: typing.List[schemas.Response] = util.pydantic_from_glob(
-        f'{CFG.response_log_path}/{idx}.json', schemas.Response
-    )
-
-    if not item:
-        raise HTTPException(status_code=404, detail="Response not found")
-
-    return item[0]
