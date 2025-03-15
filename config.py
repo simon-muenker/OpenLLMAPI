@@ -25,14 +25,18 @@ class Config:
 
         self.ip_blacklist: typing.List[str] = open(f"{self.data_path}/ip_blacklist.txt").read().splitlines()
 
-        self.models: typing.List[schemas.Model] = util.pydantic_from_glob(
-            f'{self.data_path}/models/*.json',
-            schemas.Model
+        self.models: typing.List[schemas.Model] = sorted(
+                util.pydantic_from_glob(
+                f'{self.data_path}/models/*.json',
+                schemas.Model
+            )
         )
 
-        self.personas: typing.List[schemas.Persona] = util.pydantic_from_glob(
-            f'{self.data_path}/personas/*.json',
-            schemas.Persona
+        self.personas: typing.List[schemas.Persona] = sorted(
+            util.pydantic_from_glob(
+                f'{self.data_path}/personas/*.json',
+                schemas.Persona
+            )
         )
 
     @property

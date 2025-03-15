@@ -11,3 +11,6 @@ class Model(pydantic.BaseModel):
     author: str
     origin: str
     more_link: str
+
+    def __lt__(self, other: "Model"):
+         return self.name < other.name
