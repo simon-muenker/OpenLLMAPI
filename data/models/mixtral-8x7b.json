@@ -1,9 +1,0 @@
-{
-  "id": "mixtral:8x7b",
-  "name": "Mixtral",
-  "type": "instruct",
-  "params": "8x7b",
-  "author": "Mistral AI",
-  "origin": "EU",
-  "more_link": "https://mistral.ai/news/mixtral-of-experts/"
-}

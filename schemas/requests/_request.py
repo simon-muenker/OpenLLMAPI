@@ -8,7 +8,7 @@ class _Request(pydantic.BaseModel):
         "llama3.1:8b",
         "llama3.3:70b",
         "mistral:7b",
-        "mixtral:8x7b",
+        "mistral-large:123b",
         "deepseek-r1:7b",
         "deepseek-r1:70b",
         "qwen2.5:7b",
